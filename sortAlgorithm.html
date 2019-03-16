@@ -1,0 +1,113 @@
+<script type="text/javascript">
+	//创建数组
+	function arrayList(){
+		var array=[];
+		this.insert=function(item){
+			array.push(item);
+		};
+		this.toString=function(){
+			return array.join();
+		};
+			//冒泡排序,比较任何两个相邻的项，交换，时间最慢
+		this.bubbleSort=function(){
+			var length=array.length;
+			for(var i=0;i<length;i++){
+				for(var j=0;j<length-1-i;j++){//从内循环减去外循环已经跑过的轮数，避免不必要的比较
+					if(array[j]<array[j+1]){
+						swap(j,j+1)
+					}
+				}
+			}
+		};
+		var swap=function(index1,index2){
+			var aux=array[index1];
+			array[index1]=array[index2];
+			array[index2]=aux;
+		};
+		//选择排序，找到最小的放在第一位接着找第二小的，也是嵌套循环，导致二次方复杂度
+		this.selectSort=function(){
+			var length=array.length,indexMin;
+			for(var i=0;i<length-1;i++){
+				indexMin=i;
+				for(var j=i;j<length;j++){
+					if(array[indexMin]>array[j]){
+						indexMin=j;
+					}
+				}
+				if(i!==indexMin){
+					swap(i,indexMin);
+				}
+			}
+		};
+		//插入排序，假设第一项已排序，每个数组项和前面已排序的比较从而插入，小型数组此方法性能较好
+		this.insertSort=function(){
+			var length=array.length,j,temp;
+			for(let i=1;i<length;i++){
+				j=i;
+				temp=array[i];
+				while(j>0&&array[j-1]>temp){
+					array[j]=array[j-1];
+					j--;
+				}
+				array[j]=temp;
+			}
+		};
+		//归并排序，复杂度为O(nlog^n),性能比前三个好
+		this.mergeSort=function(){
+			array=mergeSortRec(array);
+		}
+		var mergeSortRec=function(array){
+			var length=array.length;
+			if(length===1){  	//递归的结束条件，当数组长度为1时代表数组已经排序，返回数组
+				return array;
+			}
+			var mid=Math.floor(length/2),
+				left=array.slice(0,mid),
+				right=array.slice(mid,length);
+			return merge(mergeSortRec(left),mergeSortRec(right));
+			//递归调用mergesortrec函数，不断将原数组分成小数组
+		}
+		//merge函数负责合并和排序小数组来产生大数组
+		var merge=function(left,right){
+			console.log('merge')
+			var result=[],il=0,ir=0;
+			//先比较来自left和right的数组项，小的放进result数组
+			while(il<left.length&&ir<right.length){
+				if(left[il]<right[ir]){
+					result.push(left[il++]);
+				}else{
+					result.push(right[ir++]);
+				}
+			}
+			//将剩下的选项放入result数组
+			while(il<left.length){
+				result.push(left[il++]);
+				console.log('result',result,il,left[il-1])
+			}
+			while(ir<right.length){
+				result.push(right[ir++]);
+			}
+			return result;
+		}
+
+	};
+	function createArray(){
+		arr=new arrayList();
+		if(arguments.length>0){
+			for(let i=0;i<arguments.length;i++){
+				arr.insert(arguments[i])
+			}
+		}
+			return arr;
+	};
+	var arr=createArray(2,4,6,1,8,3);
+	arr.bubbleSort();
+	console.log(arr.toString());
+	var arr2=createArray(9,4,6,1,8,3);
+	arr2.insertSort();
+	console.log(arr2.toString());
+	var arr3=createArray(8,7,6,5,4,3,2,1);
+	arr3.mergeSort();
+	console.log(arr3.toString());
+
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>节流</title>
+	<style type="text/css">
+		.scrollBox{
+			width:100%;
+			height: 2000px;
+		}
+	</style>
+</head>
+<body>
+	<div class="scrollBox" id='scrollBox'></div>
+	<script type="text/javascript">
+		function scrollFn(a=1){
+			console.log(a)
+		}
+		function debounce(fn,args,interval){
+			var timeout=null
+			return function(){
+				clearTimeout(timeout)
+				timeout=setTimeout(()=>{
+					fn.apply(this,args)
+				},interval)
+			}
+		}
+		function throttle(fn,args,maxLength=300){
+			var count=0
+			return function(){
+				count++;
+				if(count<=maxLength)return
+				count=0
+				fn.apply(this,args)
+			}
+		}
+		window.addEventListener('scroll',debounce(scrollFn,[2],200))
+		// window.addEventListener('scroll',scrollFn)
+
+	</script>
+</body>
+</html>

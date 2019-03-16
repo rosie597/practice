@@ -1,0 +1,47 @@
+<script type="text/javascript">
+	//使用indexOf
+	var arr1=[1,2,3,44,5,2,1,44,33,6,7,8,null,undefined,0]
+	var arr2=['aa','ab','hh','dd','jj','gi','aa','dd']
+	function unique1(arr) {
+		var result=[];
+		for(var i=0;i<arr.length;i++){
+			if(result.indexOf(arr[i])==-1){
+				result.push(arr[i]);
+			}
+		}
+		return result;
+	}
+	//利用对象属性不能重复
+	function unique2(arr){
+		var result=[],obj=new Object();
+		for(var i=0;i<arr.length;i++){
+			if(obj[arr[i]]!=1){
+				result.push(arr[i]);
+				obj[arr[i]]=1;
+			}
+		}  
+		return result;
+	}
+	console.log(unique2(arr1));
+	console.log(unique2(arr2));
+	//先排序再排重
+	Array.prototype.unique3=function(){
+		this.sort();
+		var result=[this[0]];
+		//与结果数组的最后一项相比，不一样就插入结果数组
+		for(var i=1;i<this.length;i++){
+			if(this[i]!==result[result.length-1]){
+				result.push(this[i]);
+			}
+		}
+		return result;
+	}
+	console.log(arr1.unique3());
+	console.log(arr2.unique3());
+	//利用es6的set,用from把set变为数组结构
+	function unique4(arr){
+		return Array.from(new Set(arr))
+	}
+	console.log(unique4(arr1));
+	console.log(unique4(arr2));
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.container{
+			width: 100%;
+			height: 200px;
+		}
+		.d{
+			width: 50px;
+			height: 50px;
+			background-color: red;
+			display: inline-block;
+		}
+		.d2{
+			width: 50px;
+			height: 50px;
+			background-color: green;
+			display: inline-block;
+		}
+		.target{
+			width: 100px;
+			height: 100px;
+			margin-left: 100px;
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="d" id='d' draggable='true' ondragstart="start(event)"></div>
+		<div class="d2" id='d2' draggable='true' ondragstart="start(event)"></div>
+	</div>
+	<div class="target" id='target' ondragover="allowDrop(event)"></div>
+	<script type="text/javascript">
+			function start(ev) {
+				console.log('start',ev)
+				ev.dataTransfer.setData("Text",ev.target.id);
+			}
+			function allowDrop(ev){
+	            ev.preventDefault();
+	        }
+	        window.onload=function(){
+	        	var target=document.getElementById('target')
+				target.addEventListener('drop',function (ev) {
+					console.log('drop',ev)
+					ev.preventDefault();
+		            var data=ev.dataTransfer.getData("Text");
+		            ev.target.appendChild(document.getElementById(data));
+				})
+	        }
+	</script>
+</body>
+</html>

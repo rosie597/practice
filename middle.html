@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	/*利用margin和position水平垂直居中*/
+		/*.d1{
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			position: relative;
+		}
+		.d2{
+			width: 100px;
+			height: 100px;
+			background-color: yellow;
+			position: absolute;
+			left:0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin:auto;
+		}*/
+
+		/*利用css伪元素和vertical-align和inline-block*/
+		.d1{
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.d1:after{
+			content:'';
+			display: inline-block;
+			vertical-align: middle;
+			height: 100%;
+		}
+		.d2{
+			background-color: yellow;
+			display: inline-block;
+			vertical-align: middle;
+		}		
+
+		/*top百分比相对于父元素的高度，使用tansform或margin-top*/
+/*		.d1{
+			width: 300px;
+			height: 300px;
+			background-color: red;
+		}
+		.d2{
+			width: 100px;
+			height: 100px;
+			background-color: yellow;
+			position: relative;
+			top: 50%;
+			margin:0 auto;
+			transform:translateY(-50%);
+		}*/
+	</style>
+</head>
+<body>
+	<div class="d1">
+		<div class="d2">哈哈</div>
+	</div>
+</body>
+</html>

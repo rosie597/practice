@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	/*浮动危害：脱离文档流，影响父元素和周围元素*/
+		/*方法一：末尾加空元素，clear：both*/
+		/*.clear{
+			clear: both;
+		}*/
+		/*方法二：父元素定义伪类???*/
+		/*.clear1:after{
+			content:'';
+			clear: both;
+			display: block;
+		}
+		.clear1{
+			zoom:1;
+		}*/
+		/*方法三：父级定义overflow：hidden或auto*/
+		.clear1{
+			/*overflow: hidden;*/
+			overflow: auto;
+		}
+		/*方法四：父元素固定高度*/
+		.d1{
+			width: 100%;
+			/*height: 100px;*/
+			height:100%;
+			background-color: red;
+		}
+		.d2{
+			width: 100px;
+			height: 100px;
+			float: left;
+			background-color: yellow;
+		}
+		.d3{
+			width: 100px;
+			height: 100px;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class='d1 clear1'>
+		<div class='d2'></div>
+		<!-- <div class="clear"></div> -->
+	</div>
+	<div class="d3"></div>
+</body>
+</html>
