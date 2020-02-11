@@ -4,6 +4,7 @@
 
 // LazyMan(“Hank”).sleep(10).eat(“dinner”)输出
 // Hi! This is Hank!
+// go to sleep
 // //等待10秒..
 // Wake up after 10
 // Eat dinner~
@@ -14,6 +15,7 @@
 // Eat supper~
 
 // LazyMan(“Hank”).sleepFirst(5).eat(“supper”)输出
+// go to sleep
 // //等待5秒
 // Wake up after 5
 // Hi This is Hank!
@@ -25,10 +27,10 @@ function _LazyMan (name) {
 
 	var fn = (function (name) {
 		return function () {
-			console.log("Hi This is" + name + '!');
+			console.log("Hi This is " + name + '!');
 			self.next();
 		}
-	})(name)
+	})(name) // 使用闭包，传入参数并保存this
 
 	this.tasks.push(fn);
 
@@ -39,7 +41,6 @@ function _LazyMan (name) {
 
 _LazyMan.prototype.next = function () {
 	var fn = this.tasks.shift();
-	console.log(fn)
 	fn&&fn();
 }
 
@@ -61,22 +62,27 @@ _LazyMan.prototype.eat = function (food) {
 _LazyMan.prototype.sleep = function (time) {
 	var self = this;
 	var fn = (function (time) {
-		setTimeout(() => {
-			console.log("wakeup after " + time);
-			self.next();
-		}, time * 1000)
+		return function () {
+			console.log('go to sleep')
+			setTimeout(() => {
+				console.log("wakeup after " + time);
+				self.next();
+			}, time * 1000)
+		}
 	})(time)
 	this.tasks.push(fn);
-	
 	return this
 }
 _LazyMan.prototype.sleepFirst = function (time) {
 	var self = this;
 	var fn = (function (time) {
-		setTimeout(() => {
-			console.log("wakeup after " + time);
-			self.next();
-		}, time * 1000)
+		return function () {
+			console.log('go to sleep')
+			setTimeout(() => {
+				console.log("wakeup after " + time);
+				self.next();
+			}, time * 1000)
+		}
 	})(time)
 	this.tasks.unshift(fn);
 	
@@ -89,4 +95,4 @@ function LazyMan (name) {
 	return new _LazyMan(name);
 }
 
-LazyMan("Hank").sleepFirst(5).eat("dinner")
+LazyMan("Hank").sleepFirst(5).eat("dinner").sleep(3)
